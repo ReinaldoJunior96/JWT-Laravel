@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -11,7 +12,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class UserController extends Controller
 {
-    public function  index(): JsonResponse
+    public function index(): JsonResponse
     {
         return response()->json(User::all());
     }
@@ -33,13 +34,14 @@ class UserController extends Controller
 
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -51,14 +53,16 @@ class UserController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user','token'),201);
+        #return response()->json(compact('user', 'token'), 201);
+        return response()->json(['status'=>'sucess'], 201);
+
     }
 
     public function getAuthenticatedUser(): \Illuminate\Http\JsonResponse
     {
         try {
 
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
 

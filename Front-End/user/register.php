@@ -8,45 +8,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/datatables.min.css"/>
-    <?php
-
-    /* Cabeçalho */
-    $url = 'http://localhost:8000/users';
-    $cabecalho = array('Content-Type: application/json', 'Accept: application/json');
-    $ch = curl_init();
-    /* Request */
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $cabecalho);
-    //curl_setopt($ch, CURLOPT_POSTFIELDS,     $campos);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-    $resposta = curl_exec($ch);
-    curl_close($ch);
-    $dados = json_decode($resposta);
-    ?>
-
 </head>
 
 <body>
 <div class="container mt-5 col-4">
     <div class="shadow p-3 mb-5 bg-white rounded">
-        <form method="" action="">
+        <form method="POST" action="../back-resquest/post-api.php">
             <div class="form-group">
-                <label for="exampleInputEmail1">Endereço de email</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                       placeholder="Seu email">
-                <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com
-                    ninguém.</small>
+                <label for="exampleInputEmail1">Nome</label>
+                <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                       placeholder="Nome">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Email</label>
+                <input type="email" name="email" class="form-control" id="exampleInputPassword1" placeholder="email">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Senha</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
             </div>
             <div>
-                <button type="submit" class="btn btn-primary col-4">Entrar</button>
-                <a href="../Front-End/user/register.php" class="badge badge-light float-right mt-2">Cadastrar usuário</a>
+                <button type="submit" class="btn btn-primary col-4">Cadastrar</button>
+                <a href="../index.php" class="badge badge-light float-right mt-2">Fazer login</a>
             </div>
         </form>
     </div>
