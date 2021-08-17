@@ -22,10 +22,9 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST,           true);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST,  'POST');
 $resposta = curl_exec($ch);
-
+$responseDecoder = json_decode($resposta);
 curl_close($ch);
-echo "<pre>";
-var_dump($resposta);
-echo "</pre>";
+
+
 
 exit();

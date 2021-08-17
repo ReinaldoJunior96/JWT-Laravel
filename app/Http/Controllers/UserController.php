@@ -54,7 +54,12 @@ class UserController extends Controller
         $token = JWTAuth::fromUser($user);
 
         #return response()->json(compact('user', 'token'), 201);
-        return response()->json(['status'=>'sucess'], 201);
+        if($token){
+            return response()->json(['status'=>'sucess'], 201);
+        }else{
+            return response()->json(['status'=>'fail'], 400);
+        }
+
 
     }
 
