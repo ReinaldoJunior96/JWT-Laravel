@@ -16,25 +16,8 @@ class UserController extends Controller
     {
         return response()->json(User::all());
     }
-
-    public function authenticate(Request $request): JsonResponse
-    {
-        $credentials = $request->only('email', 'password');
-
-        try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
-            }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-
-        return response()->json(compact('token'));
-    }
-
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -54,6 +37,7 @@ class UserController extends Controller
         $token = JWTAuth::fromUser($user);
 
         #return response()->json(compact('user', 'token'), 201);
+
         if($token){
             return response()->json(['status'=>'sucess'], 201);
         }else{
@@ -62,6 +46,25 @@ class UserController extends Controller
 
 
     }
+
+
+
+
+    public function authenticate(Request $request): JsonResponse
+    {
+        $credentials = $request->only('email', 'password');
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'invalid_credentials'], 400);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
+        ##return response()->json(compact('token'));
+        return response()->json(['status'=>'success'], 200);
+    }
+
+
 
     public function getAuthenticatedUser(): \Illuminate\Http\JsonResponse
     {

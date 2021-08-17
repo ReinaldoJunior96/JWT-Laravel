@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('auth/login', [\App\Http\Controllers\UserController::class,'authenticate']);
 Route::resource('users', \App\Http\Controllers\UserController::class);
+
+
+
 
 Route::group(['middleware' => ['apiJwt']], function(){
     Route::apiResource('produtos', ProdutoController::class);
