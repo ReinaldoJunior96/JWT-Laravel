@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -13,7 +14,7 @@ class ProdutoController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Produto::all());
     }
 
     /**
@@ -34,7 +35,13 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newProduct = new Produto([
+            'prod_name' => $request->prod_name,
+            'description' => $request->description,
+        ]);
+
+        $newProduct->save();
+        return response()->json(['mensagem' => 'Sucesso!!'], 200);
     }
 
     /**
@@ -45,7 +52,7 @@ class ProdutoController extends Controller
      */
     public function show($id)
     {
-        //
+        return response()->json(Produto::find($id));
     }
 
     /**
@@ -68,7 +75,12 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $editProduto = Produto::find($id);
+        $editProduto->prod_name = $request->prod_name;
+        $editProduto->description = $request->description;
+        $editProduto->save();
+
+        return response()->json(['mensagem' => 'Sucesso!!'], 200);
     }
 
     /**
@@ -79,6 +91,8 @@ class ProdutoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $destroyProduct = Produto::find($id);
+        $destroyProduct->destroy($destroyProduct);
+        #return response()->json(['mensagem' => 'Sucesso!!'], 200);
     }
 }

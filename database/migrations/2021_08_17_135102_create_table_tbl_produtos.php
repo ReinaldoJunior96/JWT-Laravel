@@ -15,6 +15,9 @@ class CreateTableTblProdutos extends Migration
     {
         Schema::create('tbl_produtos', function (Blueprint $table) {
             $table->id();
+            $table->string('prod_name');
+            $table->text('description');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
